@@ -16,6 +16,6 @@ const _DATA = [
     }
 ];
 
-export default getData = () => {
+export const getData = () => {
     return _DATA;
 }
