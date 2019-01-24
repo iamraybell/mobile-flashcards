@@ -2,6 +2,7 @@ import { AsyncStorage } from "react-native"
 import { getData } from './../DATA';
 
 const deckSubscribers = [];
+let id = 1;
 
 const notifyDeckListSubscribers = () => {
     for (let subscriber of deckSubscribers) {
@@ -24,6 +25,7 @@ export const _saveItem = (key, value, cb) => {
 }
 
 export const _getDeckList = (cb)=> {
+    AsyncStorage.clear();
     AsyncStorage.getItem('deckList').then((deckList)=>{
         if (!deckList) {
             _saveItem('decklist', getData(), cb);
@@ -38,10 +40,12 @@ export const _saveDeck = (name, cb)=> {
         deck.push(
             {
                 name: name,
-                cards:[]
+                cards:[],
+                id,
             }
         );
         _saveItem('deckList', deck, cb);
         notifyDeckListSubscribers();
     })
+    id++;
 }

@@ -1,10 +1,14 @@
 import React from 'react';
-import { createStackNavigator , createAppContainer} from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 import  DeckList  from './Deck-List'
+import { DeckView } from './Deck-View';
+import { Quiz } from './Quiz'
 
 
 
 export const DeckContainer = createStackNavigator({  
-    Main: {screen: DeckList, screenProps:{eeee: 'wwwww'}}
+    Main: {screen: DeckList},
+    DeckView: {screen: DeckView},
+    Quiz: {screen: DeckView},
 });
 

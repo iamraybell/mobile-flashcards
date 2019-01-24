@@ -5,10 +5,8 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 export default class DeckInfo extends React.Component{
 
-    handleChangeToDeckView = (e) => {
-        console.log(this.props, e.props)
-        console.log('heeee')
-        this.props.navigation.navigate('AddDeck');
+    handleChangeToDeckView = () => {
+        this.props.navigation.navigate('DeckView', {id: this.props.deck.id});
     }
 
     render =  () => {
@@ -16,7 +14,7 @@ export default class DeckInfo extends React.Component{
             <View 
                 style={styles.container}
             > 
-                <TouchableOpacity onPress={() => this.handleChangeToDeckView(this)}>
+                <TouchableOpacity onPress={() => this.handleChangeToDeckView()}>
                     <Text>
                         Name: {this.props.deck.name}
                     </Text>
