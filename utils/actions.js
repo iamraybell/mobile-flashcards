@@ -19,13 +19,28 @@ export const subscribeToDeckList = ( cb, immediate = true) => {
 export const _saveItem = (key, value, cb) => {
     AsyncStorage.setItem(key, JSON.stringify(value)).then(()=>{
         if(cb){
-            cb(value)
+            cb(value);
         }
+        notifyDeckListSubscribers();
+    })
+}
+
+export const _saveQuestion = (id, answerGiven, question, correctAnswer, cb) => {
+    _getDeckList((deckList)=> {
+        deckList.filter((deck) => {
+            if( deck.id === id ) {
+                deck.cards.push({
+                    question,
+                    correctAnswer,
+                    answerGiven,
+                });
+            }
+        })
+        _saveItem('deckList', deckList, cb);
     })
 }
 
 export const _getDeckList = (cb)=> {
-    AsyncStorage.clear();
     AsyncStorage.getItem('deckList').then((deckList)=>{
         if (!deckList) {
             _saveItem('decklist', getData(), cb);
@@ -36,15 +51,15 @@ export const _getDeckList = (cb)=> {
 };
 
 export const _saveDeck = (name, cb)=> {
-    _getDeckList((deck) => {
-        deck.push(
+    _getDeckList((deckList) => {
+        deckList.push(
             {
                 name: name,
                 cards:[],
                 id,
             }
         );
-        _saveItem('deckList', deck, cb);
+        _saveItem('deckList', deckList, cb);
         notifyDeckListSubscribers();
     })
     id++;

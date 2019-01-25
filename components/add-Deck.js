@@ -9,7 +9,7 @@ export default class AddDeck extends React.Component{
     styles = StyleSheet.create({
         container: {
             flex: 1,
-            backgroundColor: '#fff',
+            backgroundColor:'#69e2fe',
             alignItems: 'center',
             justifyContent: 'center',
             
@@ -36,7 +36,7 @@ export default class AddDeck extends React.Component{
     }
     handleSubmit = () => {
         _saveDeck(this.state.deckName,()=> {
-            this.props.navigation.navigate('DeckList');
+            this.props.navigation.navigate('Main');
         });
     }
 

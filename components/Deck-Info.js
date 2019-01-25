@@ -1,28 +1,40 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Animated, } from 'react-native';
 
 
 
 export default class DeckInfo extends React.Component{
+    state = {
+        bounceVal: new Animated.Value(1),
+    }
 
     handleChangeToDeckView = () => {
-        this.props.navigation.navigate('DeckView', {id: this.props.deck.id});
+        const navigate = this.props.navigation.navigate;
+        Animated.sequence([
+            Animated.spring(this.state.bounceVal, {toValue: 0,  friction: 5}),
+            Animated.spring(this.state.bounceVal, {toValue: 1,  friction: 15}),
+        ]).start(
+            
+        )
+        navigate('DeckView', {id: this.props.deck.id, navigate})        
     }
 
     render =  () => {
         return (
-            <View 
-                style={styles.container}
-            > 
+
                 <TouchableOpacity onPress={() => this.handleChangeToDeckView()}>
+                    <Animated.View 
+                        style={[styles.container, {transform: [{scale: this.state.bounceVal }]}]}
+                    > 
                     <Text>
                         Name: {this.props.deck.name}
                     </Text>
                     <Text>
                         Number of Cards:  {this.props.deck.cards.length}
                     </Text>
+                    </Animated.View>
                 </TouchableOpacity>
-            </View>
+
         );
     }
 };
@@ -39,6 +51,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 20,
         alignItems: 'center',
-        backgroundColor: '#00b7eb',
+        backgroundColor:'#69e2fe',
+        margin: 10,
+        overflow: 'visible',
     },
   });
