@@ -37,7 +37,6 @@ export class Quiz extends React.Component{
     }
 
     handleGuessMade = (answer, card) => {
-        console.log(answer, card.correctAnswer)
         if ( answer === card.correctAnswer ) {
             this.setState((prevState) => {
                 return {
@@ -53,13 +52,30 @@ export class Quiz extends React.Component{
             }
         })
     }
-
+    handleGoBack = () => {
+        this.props.navigation.goBack();
+    }
+    handleReload = () => {
+        this.setState({
+            answered: 0, 
+            correct: 0,
+            cards: this.props.navigation.state.params.deck.cards,
+        })
+    }
     render = () =>{
         if (this.state.answered >= this.state.cards.length) {
             return (
                 <View style={styles.container}>
                     <Text>You have finished the quiz!</Text>
                     <Text>You got {this.state.correct} right out of {this.state.cards.length}! </Text>
+                    <Button
+                        title="Go Back"
+                        onPress={this.handleGoBack}
+                    />
+                    <Button
+                        title="Start This Quiz Over."
+                        onPress={this.handleReload}
+                    />
                 </View>
             )
         }

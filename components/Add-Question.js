@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, TextInput, Button, Picker } from 'react-native'
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 3,
         justifyContent: 'center',
         padding: 20,
         alignItems: 'center',
@@ -33,8 +33,9 @@ export class AddQuestion extends React.Component{
             borderColor: 'black',
             borderRadius: 4,
             borderWidth: 0.5,
-            maxHeight: 20,
+            height: 80,
             minWidth: 300,
+            marginBottom: 30,
             color: '#000000',
         },
     
@@ -81,10 +82,10 @@ export class AddQuestion extends React.Component{
                     onChangeText ={(text) => this.handleAnswerChange(text)}
                     value = {this.state.answer}
                 />
-                <Text>Is this the correct Answer?</Text>
+                <Text style={{ fontSize: 25, marginTop:180}}>Is this the correct Answer?</Text>
                 <Picker
                     selectedValue={this.state.correctAnswer}
-                    style={{ height: 50, width: 100 }}
+                    style={{ height: 50, width: 100 , marginBottom:200,}}
                     onValueChange={(itemValue) => this.setState({correctAnswer: itemValue})}>
                     <Picker.Item label="Yes" value="Yes" />
                     <Picker.Item label="No" value="No" />

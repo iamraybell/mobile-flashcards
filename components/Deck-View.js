@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
-import { subscribeToDeckList } from './../utils/actions';
+import { subscribeToDeckList, _unsubscribe } from './../utils/actions';
 
-
+let subId = null
 styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -19,7 +19,7 @@ export class DeckView extends React.Component{
     componentDidMount = () => {
 
         const id = this.props.navigation.state.params.id;
-        subscribeToDeckList((decklist) => { 
+        subId = subscribeToDeckList((decklist) => { 
             const deck = decklist.filter((deck) => {
                 return deck.id === id
             })[0];
@@ -31,6 +31,9 @@ export class DeckView extends React.Component{
             })
         })
     }
+    // componentWillUnmount(){
+    //     _unsubscribe(subId);
+    // }
     startQuiz = () => {
         this.props.navigation.navigate('Quiz', {deck: this.state.deck});
     }
@@ -38,7 +41,6 @@ export class DeckView extends React.Component{
         this.props.navigation.navigate('AddQuestion', {id: this.state.deck.id});
     }
     render = () =>{
-        console.log(this.state, 'this is the state')
         return (
             <View style={styles.container}>
                 <Text>Name: {this.state.deck.name}</Text>

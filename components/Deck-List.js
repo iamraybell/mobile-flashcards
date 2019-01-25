@@ -1,15 +1,17 @@
 import React from 'react';
-import { StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, ScrollView} from 'react-native';
 import  DeckInfo  from './Deck-Info';
-import { subscribeToDeckList } from './../utils/actions';
-
+import { subscribeToDeckList, _unsubscribe } from './../utils/actions';
+let subId = null;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        padding: 20,
+        padding: 100,
         alignItems: 'center',
         backgroundColor:'#554945',
+        minHeight:`150%`
+
     },
   });
 
@@ -19,7 +21,8 @@ export default class DeckList extends React.Component{
     };
     
     componentDidMount() {
-        subscribeToDeckList((decklist) => {
+       subId =  subscribeToDeckList((decklist) => {
+           console.log('im changed')
             this.setState((prevState) => {
                 return {
                     ...prevState,
@@ -28,21 +31,29 @@ export default class DeckList extends React.Component{
             })
         })
     }
+    // componentWillUnmount(){
+    //     _unsubscribe(subId)
+    // }
 
     render () {
         return (
-            <View style={styles.container}> 
+            <ScrollView 
+                contentContainerStyle={styles.container}
+                scrollEnabled={true}
+            > 
                 {this.state.decks.map((deck)=> {
+                    console.log(deck.id)
 
                     return (
                         <DeckInfo
                             deck={deck}
-                            key={deck.name}
+                            key={deck.id}
                             navigation ={this.props.navigation}
+                        
                         />
                     );
                 })}
-            </View>
+            </ScrollView>
         );
     }
 };
