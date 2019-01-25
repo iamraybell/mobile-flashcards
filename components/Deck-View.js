@@ -31,9 +31,22 @@ export class DeckView extends React.Component{
             })
         })
     }
-    // componentWillUnmount(){
-    //     _unsubscribe(subId);
-    // }
+
+    componentWillReceiveProps =(nextProps) => {
+        _unsubscribe(subId);
+        const id = nextProps.navigation.state.params.id;
+        subId = subscribeToDeckList((decklist) => { 
+            const deck = decklist.filter((deck) => {
+                return deck.id === id
+            })[0];
+            this.setState((prevState) => {
+                return {
+                    ...prevState,
+                    deck: deck
+                }
+            })
+        })
+    }
     startQuiz = () => {
         this.props.navigation.navigate('Quiz', {deck: this.state.deck});
     }

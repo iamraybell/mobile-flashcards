@@ -35,8 +35,10 @@ export default class AddDeck extends React.Component{
         })
     }
     handleSubmit = () => {
-        _saveDeck(this.state.deckName,()=> {
-            this.props.navigation.navigate('Main');
+        _saveDeck(this.state.deckName,(deckList)=> {
+            const id = deckList[deckList.length-1].id;
+            
+            this.props.navigation.navigate('DeckView', {id: id});
         });
     }
 

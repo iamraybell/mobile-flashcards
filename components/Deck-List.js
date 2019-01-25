@@ -22,7 +22,7 @@ export default class DeckList extends React.Component{
     
     componentDidMount() {
        subId =  subscribeToDeckList((decklist) => {
-           console.log('im changed')
+
             this.setState((prevState) => {
                 return {
                     ...prevState,
@@ -42,7 +42,6 @@ export default class DeckList extends React.Component{
                 scrollEnabled={true}
             > 
                 {this.state.decks.map((deck)=> {
-                    console.log(deck.id)
 
                     return (
                         <DeckInfo

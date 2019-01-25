@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import { Card } from './Card';
+import {clearLocalNotifications, setNotifications} from './../utils/helpers';
 
 
 styles = StyleSheet.create({
@@ -64,6 +65,8 @@ export class Quiz extends React.Component{
     }
     render = () =>{
         if (this.state.answered >= this.state.cards.length) {
+            clearLocalNotifications
+                .then(setNotifications);
             return (
                 <View style={styles.container}>
                     <Text>You have finished the quiz!</Text>

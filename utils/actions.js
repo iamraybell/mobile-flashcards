@@ -6,12 +6,10 @@ const subId = 1;
 
 const notifyDeckListSubscribers = () => {
     for (let subscriber of deckSubscribers) {
-        console.log('im notifyig')
         _getDeckList(subscriber.cb);
     }
 }
 export const _unsubscribe = (id) => {
-    console.log('eeeee')
     deckSubscribers = deckSubscribers.filter((sub)=> {
         sub.subId != id;
     })
@@ -19,7 +17,6 @@ export const _unsubscribe = (id) => {
 export const subscribeToDeckList = ( cb, immediate = true) => {
     deckSubscribers.push({cb, subId});
     if(immediate) {
-        console.log('immed')
         _getDeckList(cb);
     }
     const id = subId;
@@ -30,7 +27,7 @@ export const subscribeToDeckList = ( cb, immediate = true) => {
 export const _saveItem = (key, value, cb) => {
 
     AsyncStorage.setItem(key, JSON.stringify(value)).then((val)=>{
-        notifyDeckListSubscribers();
+            notifyDeckListSubscribers();
         if(cb){
             cb(value);
         }
@@ -54,6 +51,7 @@ export const _saveQuestion = (id, answerGiven, question, correctAnswer, cb) => {
 }
 
 export const _getDeckList = (cb)=> {
+    // AsyncStorage.clear()
     AsyncStorage.getItem('deckList').then((deckList)=>{
 
         if (!deckList) {
@@ -68,7 +66,6 @@ export const _getDeckList = (cb)=> {
 
 export const _saveDeck = (name, cb)=> {
     _getDeckList((deckList) => {
-        console.log('here')
         deckList.push(
             {
                 name: name,
@@ -76,7 +73,6 @@ export const _saveDeck = (name, cb)=> {
                 id: deckList.length+1,
             }
         );
-        console.log(cb)
         _saveItem('deckList', deckList, cb);
     })
 }
